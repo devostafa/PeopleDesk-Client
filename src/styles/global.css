@@ -1,17 +1,17 @@
 :root {
-    --main-color: #ca00af;
-    --disabled-color: #808080;
-    --border-color: #dd00ff;
-    --analytics-positive-color: rgb(91 202 0);
-    --analytics-positive-background-color: rgb(114 255 0);
-    --analytics-negative-color: #b40000;
-    --analytics-negative-background-color: #ff0000;
+  --main-color: #ca00af;
+  --disabled-color: #808080;
+  --border-color: #dd00ff;
+  --analytics-positive-color: rgb(91 202 0);
+  --analytics-positive-background-color: rgb(114 255 0);
+  --analytics-negative-color: #b40000;
+  --analytics-negative-background-color: #ff0000;
 }
 
 .logo-typo {
-    color: var( --main-color);
-    text-align: center;
-    margin: 0;
+  color: var(--main-color);
+  text-align: center;
+  margin: 0;
 }
 
 .spinner-container {
@@ -38,8 +38,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .text-center {
@@ -51,19 +55,19 @@
 }
 
 .action-buttons {
-    opacity: 0;
-    transition: opacity 0.2s;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
 tr:hover .action-buttons {
-    opacity: 1;
+  opacity: 1;
 }
 
 .sortable-header {
-    cursor: pointer;
-    user-select: none;
+  cursor: pointer;
+  user-select: none;
 }
 
 .sortable-header:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }

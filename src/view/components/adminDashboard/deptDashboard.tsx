@@ -1,30 +1,30 @@
-import { useEffect, useState } from 'react';
-import deptService from '../../../services/deptService';
-import '../../../styles/components/deptDashboard.css';
+import { useEffect, useState } from "react";
+import deptService from "../../../services/deptService";
+import "../../../styles/components/deptDashboard.css";
 
 export default function DeptDashboard() {
   const [departments, setDepartments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [search, setSearch] = useState('');
-  const [sort, setSort] = useState('id:DESC');
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("id:DESC");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingDept, setEditingDept] = useState<any>(null);
-  const [formData, setFormData] = useState({ name: '' });
+  const [formData, setFormData] = useState({ name: "" });
 
   const limit = 5;
 
   const fetchDepartments = async () => {
     setLoading(true);
-    setError('');
+    setError("");
     try {
       const result = await deptService.getAll(page, limit, search, sort);
       setDepartments(result.data);
       setTotal(result.total);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to fetch departments');
+      setError(err.response?.data?.message || "Failed to fetch departments");
     } finally {
       setLoading(false);
     }
@@ -43,19 +43,20 @@ export default function DeptDashboard() {
   }, [search]);
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this department?')) return;
+    if (!window.confirm("Are you sure you want to delete this department?"))
+      return;
     try {
       await deptService.delete(id);
       fetchDepartments();
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Delete failed');
+      alert(err.response?.data?.message || "Delete failed");
     }
   };
 
   const handleSort = (field: string) => {
-    const [currentField, currentDir] = sort.split(':');
+    const [currentField, currentDir] = sort.split(":");
     if (currentField === field) {
-      setSort(`${field}:${currentDir === 'ASC' ? 'DESC' : 'ASC'}`);
+      setSort(`${field}:${currentDir === "ASC" ? "DESC" : "ASC"}`);
     } else {
       setSort(`${field}:ASC`);
     }
@@ -63,7 +64,7 @@ export default function DeptDashboard() {
 
   const handleOpenAdd = () => {
     setEditingDept(null);
-    setFormData({ name: '' });
+    setFormData({ name: "" });
     setIsFormOpen(true);
   };
 
@@ -84,14 +85,14 @@ export default function DeptDashboard() {
       setIsFormOpen(false);
       fetchDepartments();
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Action failed');
+      alert(err.response?.data?.message || "Action failed");
     }
   };
 
   const renderSortIcon = (field: string) => {
-    const [currentField, currentDir] = sort.split(':');
+    const [currentField, currentDir] = sort.split(":");
     if (currentField !== field) return null;
-    return currentDir === 'ASC' ? ' ↑' : ' ↓';
+    return currentDir === "ASC" ? " ↑" : " ↓";
   };
 
   if (error) return <div className="error-message p-8">Error: {error}</div>;
@@ -117,18 +118,28 @@ export default function DeptDashboard() {
 
       {isFormOpen && (
         <div className="dashboard-form-container">
-          <h3 className="dashboard-form-title">{editingDept ? 'Edit Department' : 'Add New Department'}</h3>
+          <h3 className="dashboard-form-title">
+            {editingDept ? "Edit Department" : "Add New Department"}
+          </h3>
           <form onSubmit={handleSubmit} className="dashboard-form">
-            <input 
-              placeholder="Department Name" 
-              required 
-              value={formData.name} 
-              onChange={e => setFormData({ name: e.target.value })} 
+            <input
+              placeholder="Department Name"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({ name: e.target.value })}
               className="form-input"
             />
             <div className="form-actions">
-              <button type="submit" className="btn-success">Save</button>
-              <button type="button" onClick={() => setIsFormOpen(false)} className="btn-secondary">Cancel</button>
+              <button type="submit" className="btn-success">
+                Save
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsFormOpen(false)}
+                className="btn-secondary"
+              >
+                Cancel
+              </button>
             </div>
           </form>
         </div>
@@ -143,7 +154,12 @@ export default function DeptDashboard() {
         <table className="data-table">
           <thead>
             <tr>
-              <th className="sortable-header" onClick={() => handleSort('name')}>Name{renderSortIcon('name')}</th>
+              <th
+                className="sortable-header"
+                onClick={() => handleSort("name")}
+              >
+                Name{renderSortIcon("name")}
+              </th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -153,8 +169,18 @@ export default function DeptDashboard() {
                 <td className="data-table-cell">{dept.name}</td>
                 <td className="data-table-cell">
                   <div className="action-buttons">
-                    <button onClick={() => handleOpenEdit(dept)} className="btn-edit">Edit</button>
-                    <button onClick={() => handleDelete(dept.id)} className="btn-delete">Delete</button>
+                    <button
+                      onClick={() => handleOpenEdit(dept)}
+                      className="btn-edit"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(dept.id)}
+                      className="btn-delete"
+                    >
+                      Delete
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -162,11 +188,25 @@ export default function DeptDashboard() {
           </tbody>
         </table>
       </div>
-      
+
       <div className="pagination">
-        <button className="pagination-btn" disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
-        <span className="pagination-info">Page {page} of {Math.ceil(total / limit) || 1}</span>
-        <button className="pagination-btn" disabled={page >= Math.ceil(total / limit)} onClick={() => setPage(page + 1)}>Next</button>
+        <button
+          className="pagination-btn"
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+        >
+          Prev
+        </button>
+        <span className="pagination-info">
+          Page {page} of {Math.ceil(total / limit) || 1}
+        </span>
+        <button
+          className="pagination-btn"
+          disabled={page >= Math.ceil(total / limit)}
+          onClick={() => setPage(page + 1)}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

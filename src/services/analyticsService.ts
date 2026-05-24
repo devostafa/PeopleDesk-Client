@@ -1,4 +1,4 @@
-import api from './api';
+import api from "./api";
 
 export interface RecentHire {
   id: string | number;
@@ -20,6 +20,6 @@ export interface AnalyticsSummary {
 }
 
 export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
-  const response = await api.get('/analytics/summary');
+  const response = await api.get("/analytics/summary");
   return response.data;
 }

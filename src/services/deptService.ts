@@ -1,8 +1,15 @@
-import api from './api';
+import api from "./api";
 
 const deptService = {
-  async getAll(page: number = 1, limit: number = 10, search: string = '', sort: string = '') {
-    const response = await api.get(`/departments?page=${page}&limit=${limit}&search=${search}&sort=${sort}`);
+  async getAll(
+    page: number = 1,
+    limit: number = 10,
+    search: string = "",
+    sort: string = "",
+  ) {
+    const response = await api.get(
+      `/departments?page=${page}&limit=${limit}&search=${search}&sort=${sort}`,
+    );
     return response.data;
   },
   async getById(id: string) {
@@ -10,7 +17,7 @@ const deptService = {
     return response.data;
   },
   async create(data: any) {
-    const response = await api.post('/departments', data);
+    const response = await api.post("/departments", data);
     return response.data;
   },
   async update(id: string, data: any) {
@@ -20,7 +27,7 @@ const deptService = {
   async delete(id: string) {
     const response = await api.delete(`/departments/${id}`);
     return response.data;
-  }
+  },
 };
 
 export default deptService;
