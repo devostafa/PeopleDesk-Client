@@ -32,11 +32,13 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
   return (
     <div className="container">
       <form className="login-form" onSubmit={handleLogin}>
-        <h1 className={"logo-typo"}>PeopleDesk™️</h1>
+        <h1 className={"logo-typo"}>PeopleDesk™</h1>
         <h3 className="login-form-title">Login</h3>
         {error && <p className="error-message">{error}</p>}
         <div className="form-group">
-          <label htmlFor="userName" className="form-label">Username</label>
+          <label htmlFor="userName" className="form-label">
+            Username
+          </label>
           <input
             id="userName"
             className="form-input"
@@ -47,7 +49,9 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password" className="form-label">Password</label>
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
           <input
             id="password"
             className="form-input"

@@ -189,6 +189,7 @@ export default function EmpDashboard() {
             <tr>
               <th className="sortable-header" onClick={() => handleSort('firstName')}>Name{renderSortIcon('firstName')}</th>
               <th className="sortable-header" onClick={() => handleSort('email')}>Email{renderSortIcon('email')}</th>
+              <th className="sortable-header" onClick={() => handleSort('hireDate')}>Hire Date{renderSortIcon('hireDate')}</th>
               <th>Department</th>
               <th>Actions</th>
             </tr>
@@ -198,6 +199,7 @@ export default function EmpDashboard() {
               <tr key={emp.id} className="data-table-row">
                 <td className="data-table-cell">{emp.firstName} {emp.lastName}</td>
                 <td className="data-table-cell">{emp.email}</td>
+                <td className="data-table-cell">{emp.hireDate ? new Date(emp.hireDate).toLocaleDateString() : 'N/A'}</td>
                 <td className="data-table-cell">{emp.departmentName || 'N/A'}</td>
                 <td className="data-table-cell">
                   <div className="action-buttons">

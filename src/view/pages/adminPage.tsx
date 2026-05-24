@@ -10,7 +10,7 @@ export default function AdminPage() {
   return (
     <div className="admin-layout">
       <nav className="admin-nav">
-        <h1 className="admin-logo">PeopleDesk™️</h1>
+        <h1 className="admin-logo">PeopleDesk™</h1>
         <ul className="admin-nav-list">
           <li
             className={`admin-nav-item ${dashboardTab === 0 ? "active" : ""}`}
