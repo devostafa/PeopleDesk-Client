@@ -5,7 +5,7 @@ const deptService = {
     const response = await api.get(`/departments?page=${page}&limit=${limit}&search=${search}&sort=${sort}`);
     return response.data;
   },
-  async getById(id: number) {
+  async getById(id: string) {
     const response = await api.get(`/departments/${id}`);
     return response.data;
   },
@@ -13,11 +13,11 @@ const deptService = {
     const response = await api.post('/departments', data);
     return response.data;
   },
-  async update(id: number, data: any) {
+  async update(id: string, data: any) {
     const response = await api.put(`/departments/${id}`, data);
     return response.data;
   },
-  async delete(id: number) {
+  async delete(id: string) {
     const response = await api.delete(`/departments/${id}`);
     return response.data;
   }

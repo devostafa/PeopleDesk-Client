@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import deptService from '../../../services/deptService';
-import '../../../styles/components/dashboard.css';
+import '../../../styles/components/deptDashboard.css';
 
 export default function DeptDashboard() {
   const [departments, setDepartments] = useState<any[]>([]);
@@ -42,7 +42,7 @@ export default function DeptDashboard() {
     return () => clearTimeout(timer);
   }, [search]);
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this department?')) return;
     try {
       await deptService.delete(id);
@@ -97,9 +97,9 @@ export default function DeptDashboard() {
   if (error) return <div className="error-message p-8">Error: {error}</div>;
 
   return (
-    <div>
+    <div className="dashboard-container">
       <div className="dashboard-header">
-        <h2>Departments</h2>
+        <h2 className="dashboard-header-title">Departments</h2>
         <button onClick={handleOpenAdd} className="btn-primary">
           Add Department
         </button>
@@ -117,7 +117,7 @@ export default function DeptDashboard() {
 
       {isFormOpen && (
         <div className="dashboard-form-container">
-          <h3>{editingDept ? 'Edit Department' : 'Add New Department'}</h3>
+          <h3 className="dashboard-form-title">{editingDept ? 'Edit Department' : 'Add New Department'}</h3>
           <form onSubmit={handleSubmit} className="dashboard-form">
             <input 
               placeholder="Department Name" 
@@ -143,17 +143,15 @@ export default function DeptDashboard() {
         <table className="data-table">
           <thead>
             <tr>
-              <th className="sortable-header" onClick={() => handleSort('id')}>ID{renderSortIcon('id')}</th>
               <th className="sortable-header" onClick={() => handleSort('name')}>Name{renderSortIcon('name')}</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {departments.map((dept) => (
-              <tr key={dept.id}>
-                <td>{dept.id}</td>
-                <td>{dept.name}</td>
-                <td>
+              <tr key={dept.id} className="data-table-row">
+                <td className="data-table-cell">{dept.name}</td>
+                <td className="data-table-cell">
                   <div className="action-buttons">
                     <button onClick={() => handleOpenEdit(dept)} className="btn-edit">Edit</button>
                     <button onClick={() => handleDelete(dept.id)} className="btn-delete">Delete</button>
@@ -166,9 +164,9 @@ export default function DeptDashboard() {
       </div>
       
       <div className="pagination">
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
-        <span>Page {page} of {Math.ceil(total / limit) || 1}</span>
-        <button disabled={page >= Math.ceil(total / limit)} onClick={() => setPage(page + 1)}>Next</button>
+        <button className="pagination-btn" disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
+        <span className="pagination-info">Page {page} of {Math.ceil(total / limit) || 1}</span>
+        <button className="pagination-btn" disabled={page >= Math.ceil(total / limit)} onClick={() => setPage(page + 1)}>Next</button>
       </div>
     </div>
   );

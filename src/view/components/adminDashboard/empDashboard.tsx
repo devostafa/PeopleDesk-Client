@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import empService from '../../../services/empService';
 import deptService from '../../../services/deptService';
-import '../../../styles/components/dashboard.css';
+import '../../../styles/components/empDashboard.css';
 
 export default function EmpDashboard() {
   const [employees, setEmployees] = useState<any[]>([]);
@@ -65,7 +65,7 @@ export default function EmpDashboard() {
     fetchDepartments();
   }, []);
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!window.confirm('Are you sure you want to delete this employee?')) return;
     try {
       await empService.delete(id);
@@ -115,7 +115,7 @@ export default function EmpDashboard() {
     try {
       const data = {
         ...formData,
-        departmentId: formData.departmentId ? Number(formData.departmentId) : null,
+        departmentId: formData.departmentId || null,
         salary: Number(formData.salary)
       };
       if (editingEmployee) {
@@ -139,9 +139,9 @@ export default function EmpDashboard() {
   if (error) return <div className="error-message p-8">Error: {error}</div>;
 
   return (
-    <div>
+    <div className="dashboard-container">
       <div className="dashboard-header">
-        <h2>Employees</h2>
+        <h2 className="dashboard-header-title">Employees</h2>
         <button onClick={handleOpenAdd} className="btn-primary">
           Add Employee
         </button>
@@ -159,14 +159,14 @@ export default function EmpDashboard() {
 
       {isFormOpen && (
         <div className="dashboard-form-container">
-          <h3>{editingEmployee ? 'Edit Employee' : 'Add New Employee'}</h3>
+          <h3 className="dashboard-form-title">{editingEmployee ? 'Edit Employee' : 'Add New Employee'}</h3>
           <form onSubmit={handleSubmit} className="dashboard-form">
-            <input placeholder="First Name" required value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} />
-            <input placeholder="Last Name" required value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})} />
-            <input placeholder="Email" type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
-            <input placeholder="Salary" type="number" required value={formData.salary} onChange={e => setFormData({...formData, salary: Number(e.target.value)})} />
-            <input placeholder="Hire Date" type="date" required value={formData.hireDate} onChange={e => setFormData({...formData, hireDate: e.target.value})} />
-            <select value={formData.departmentId} onChange={e => setFormData({...formData, departmentId: e.target.value})}>
+            <input className="form-input" placeholder="First Name" required value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})} />
+            <input className="form-input" placeholder="Last Name" required value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})} />
+            <input className="form-input" placeholder="Email" type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+            <input className="form-input" placeholder="Salary" type="number" required value={formData.salary} onChange={e => setFormData({...formData, salary: Number(e.target.value)})} />
+            <input className="form-input" placeholder="Hire Date" type="date" required value={formData.hireDate} onChange={e => setFormData({...formData, hireDate: e.target.value})} />
+            <select className="form-select" value={formData.departmentId} onChange={e => setFormData({...formData, departmentId: e.target.value})}>
               <option value="">No Department</option>
               {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
             </select>
@@ -187,7 +187,6 @@ export default function EmpDashboard() {
         <table className="data-table">
           <thead>
             <tr>
-              <th className="sortable-header" onClick={() => handleSort('id')}>ID{renderSortIcon('id')}</th>
               <th className="sortable-header" onClick={() => handleSort('firstName')}>Name{renderSortIcon('firstName')}</th>
               <th className="sortable-header" onClick={() => handleSort('email')}>Email{renderSortIcon('email')}</th>
               <th>Department</th>
@@ -196,12 +195,11 @@ export default function EmpDashboard() {
           </thead>
           <tbody>
             {employees.map((emp) => (
-              <tr key={emp.id}>
-                <td>{emp.id}</td>
-                <td>{emp.firstName} {emp.lastName}</td>
-                <td>{emp.email}</td>
-                <td>{emp.departmentName || 'N/A'}</td>
-                <td>
+              <tr key={emp.id} className="data-table-row">
+                <td className="data-table-cell">{emp.firstName} {emp.lastName}</td>
+                <td className="data-table-cell">{emp.email}</td>
+                <td className="data-table-cell">{emp.departmentName || 'N/A'}</td>
+                <td className="data-table-cell">
                   <div className="action-buttons">
                     <button onClick={() => handleOpenEdit(emp)} className="btn-edit">Edit</button>
                     <button onClick={() => handleDelete(emp.id)} className="btn-delete">Delete</button>
@@ -214,9 +212,9 @@ export default function EmpDashboard() {
       </div>
 
       <div className="pagination">
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
-        <span>Page {page} of {Math.ceil(total / limit) || 1}</span>
-        <button disabled={page >= Math.ceil(total / limit)} onClick={() => setPage(page + 1)}>Next</button>
+        <button className="pagination-btn" disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
+        <span className="pagination-info">Page {page} of {Math.ceil(total / limit) || 1}</span>
+        <button className="pagination-btn" disabled={page >= Math.ceil(total / limit)} onClick={() => setPage(page + 1)}>Next</button>
       </div>
     </div>
   );

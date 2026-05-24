@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
+import api from './api';
 
 export interface RecentHire {
   id: string | number;
@@ -20,20 +20,6 @@ export interface AnalyticsSummary {
 }
 
 export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
-  const token = localStorage.getItem("jwt_token");
-
-  const response = await fetch(`${API_BASE_URL}/analytics/summary`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || "Failed to fetch analytics summary");
-  }
-
-  return response.json();
+  const response = await api.get('/analytics/summary');
+  return response.data;
 }

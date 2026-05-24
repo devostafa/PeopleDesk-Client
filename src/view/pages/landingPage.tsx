@@ -3,7 +3,11 @@ import { useNavigate } from "react-router";
 import authService from "../../services/authService";
 import "../../styles/pages/landingPage.css";
 
-export default function LandingPage() {
+interface LandingPageProps {
+  onLoginSuccess?: () => void;
+}
+
+export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,6 +20,7 @@ export default function LandingPage() {
     setError("");
     try {
       await authService.login({ userName, password });
+      onLoginSuccess?.();
       navigate("/admin");
     } catch (err: any) {
       setError(err.response?.data?.message || "Login failed");
@@ -31,7 +36,7 @@ export default function LandingPage() {
         <h3 className="login-form-title">Login</h3>
         {error && <p className="error-message">{error}</p>}
         <div className="form-group">
-          <label htmlFor="userName">Username</label>
+          <label htmlFor="userName" className="form-label">Username</label>
           <input
             id="userName"
             className="form-input"
@@ -42,7 +47,7 @@ export default function LandingPage() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="form-label">Password</label>
           <input
             id="password"
             className="form-input"

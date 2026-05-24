@@ -7,12 +7,14 @@ import authService from "./services/authService";
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // All the app's initialization functions are called here
   useEffect(() => {
     const initAuth = async () => {
       try {
         await authService.refreshToken();
+        setIsAdmin(authService.getUserRole() === "ADMIN");
       } catch (error) {
         console.info("No active session", error);
       } finally {
@@ -30,11 +32,9 @@ function App() {
     );
   }
 
-  const isAdmin = authService.getUserRole() === "ADMIN";
-
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<LandingPage onLoginSuccess={() => setIsAdmin(true)} />} />
       <Route
         path="/admin"
         element={isAdmin ? <AdminPage /> : <Navigate to="/" replace />}

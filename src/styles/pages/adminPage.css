@@ -11,30 +11,30 @@
   flex-shrink: 0;
 }
 
-.admin-nav h1 {
+.admin-logo {
   font-size: 1.5rem;
   margin-bottom: 2rem;
   color: #ecf0f1;
 }
 
-.admin-nav ul {
+.admin-nav-list {
   list-style: none;
   padding: 0;
 }
 
-.admin-nav li {
+.admin-nav-item {
   padding: 0.75rem 1rem;
   cursor: pointer;
   transition: background-color 0.2s;
   border-radius: 4px;
 }
 
-.admin-nav li:hover {
+.admin-nav-item:hover {
   background-color: #34495e;
 }
 
-.admin-nav li.active {
-  background-color: #007bff;
+.admin-nav-item.active {
+  background-color: var(--main-color);
 }
 
 .nav-category-title {
@@ -61,19 +61,19 @@
     padding: 0.5rem;
   }
 
-  .admin-nav h1 {
+  .admin-logo {
     margin-bottom: 1rem;
     text-align: center;
   }
 
-  .admin-nav ul {
+  .admin-nav-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem;
   }
 
-  .admin-nav li {
+  .admin-nav-item {
     padding: 0.5rem 0.75rem;
   }
 

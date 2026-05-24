@@ -10,23 +10,23 @@ export default function AdminPage() {
   return (
     <div className="admin-layout">
       <nav className="admin-nav">
-        <h1>PeopleDesk™️</h1>
-        <ul>
+        <h1 className="admin-logo">PeopleDesk™️</h1>
+        <ul className="admin-nav-list">
           <li
-            className={dashboardTab === 0 ? "active" : ""}
+            className={`admin-nav-item ${dashboardTab === 0 ? "active" : ""}`}
             onClick={() => setDashboardTab(0)}
           >
             Main
           </li>
           <p className="nav-category-title">Manage</p>
           <li
-            className={dashboardTab === 1 ? "active" : ""}
+            className={`admin-nav-item ${dashboardTab === 1 ? "active" : ""}`}
             onClick={() => setDashboardTab(1)}
           >
             Employees
           </li>
           <li
-            className={dashboardTab === 2 ? "active" : ""}
+            className={`admin-nav-item ${dashboardTab === 2 ? "active" : ""}`}
             onClick={() => setDashboardTab(2)}
           >
             Departments
