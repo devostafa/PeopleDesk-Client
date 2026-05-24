@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import LandingPage from "./view/pages/landingPage.tsx";
 import AdminPage from "./view/pages/adminPage.tsx";
 import authService from "./services/authService";
+import { UserRole } from "./data/enums/userRole.ts";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,7 @@ function App() {
     const initAuth = async () => {
       try {
         await authService.refreshToken();
-        setIsAdmin(authService.getUserRole() === "ADMIN");
+        setIsAdmin(authService.getUserRole() === UserRole.ADMIN);
       } catch (error) {
         console.info("No active session", error);
       } finally {
@@ -34,7 +35,16 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<LandingPage onLoginSuccess={() => setIsAdmin(true)} />} />
+      <Route
+        path="/"
+        element={
+          <LandingPage
+            onLoginSuccess={() =>
+              setIsAdmin(authService.getUserRole() === UserRole.ADMIN)
+            }
+          />
+        }
+      />
       <Route
         path="/admin"
         element={isAdmin ? <AdminPage /> : <Navigate to="/" replace />}
