@@ -114,28 +114,19 @@ export default function EmpDashboard() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const data: {
-        firstName: string;
-        lastName: string;
-        email: string;
-        salary: number;
-        hireDate: string;
-        departmentId?: string | null;
-      } = {
+      if (!formData.departmentId) {
+        alert("Department is required");
+        return;
+      }
+
+      const data = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
         hireDate: formData.hireDate,
         salary: Number(formData.salary),
+        departmentId: formData.departmentId,
       };
-
-      if (formData.departmentId) {
-        data.departmentId = formData.departmentId;
-      }
-
-      if (editingEmployee && !formData.departmentId) {
-        data.departmentId = null;
-      }
 
       console.log("Employee payload:", data);
 
@@ -234,12 +225,15 @@ export default function EmpDashboard() {
             />
             <select
               className="form-select"
+              required
               value={formData.departmentId}
               onChange={(e) =>
                 setFormData({ ...formData, departmentId: e.target.value })
               }
             >
-              <option value="">No Department</option>
+              <option value="" disabled>
+                Select Department
+              </option>
               {departments.map((d) => (
                 <option key={d.id} value={d.id}>
                   {d.name}
@@ -305,9 +299,7 @@ export default function EmpDashboard() {
                     ? new Date(emp.hireDate).toLocaleDateString()
                     : "N/A"}
                 </td>
-                <td className="data-table-cell">
-                  {emp.departmentName || "N/A"}
-                </td>
+                <td className="data-table-cell">{emp.departmentName}</td>
                 <td className="data-table-cell">
                   <div className="action-buttons">
                     <button
