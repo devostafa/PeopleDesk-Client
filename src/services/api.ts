@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { getAccessToken, setAccessToken } from './tokenStorage';
+import axios from "axios";
+import { getAccessToken, setAccessToken } from "./tokenStorage";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5001",
   withCredentials: true,
 });
 
@@ -21,8 +21,8 @@ api.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes('/auth/login') &&
-      !originalRequest.url?.includes('/auth/refresh')
+      !originalRequest.url?.includes("/auth/login") &&
+      !originalRequest.url?.includes("/auth/refresh")
     ) {
       originalRequest._retry = true;
       try {
