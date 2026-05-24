@@ -1,0 +1,69 @@
+:root {
+    --main-color: #ca00af;
+    --disabled-color: #808080;
+    --border-color: #dd00ff;
+    --analytics-positive-color: rgb(91 202 0);
+    --analytics-positive-background-color: rgb(114 255 0);
+    --analytics-negative-color: #b40000;
+    --analytics-negative-background-color: #ff0000;
+}
+
+.logo-typo {
+    color: var( --main-color);
+    text-align: center;
+    margin: 0;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  user-select: none;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.spinner-sm {
+  width: 30px;
+  height: 30px;
+  border-width: 3px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.action-buttons {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+tr:hover .action-buttons {
+    opacity: 1;
+}
+
+.sortable-header {
+    cursor: pointer;
+    user-select: none;
+}
+
+.sortable-header:hover {
+    background-color: #f0f0f0;
+}
